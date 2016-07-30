@@ -29,10 +29,8 @@ class Connector
     {
         try {
             $output = new Output();
-
             $config = new Config();
-
-            $input = new Input(array(
+            $input  = new Input(array(
                 'clientIpKey' => $config->get('client_ip'),
                 'callerKey'   => $config->get('caller'),
                 'ignoreFile'  => $config->get('ignore'),

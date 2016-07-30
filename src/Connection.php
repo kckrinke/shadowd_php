@@ -41,6 +41,8 @@ if (!function_exists('json_encode')) {
 
 class Connection
 {
+    private $options;
+
     /* Construct a new object. */
     public function __construct($options = array())
     {

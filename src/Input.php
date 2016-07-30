@@ -22,6 +22,8 @@ namespace shadowd;
 
 class Input
 {
+    private $options;
+
     /* Construct a new object. */
     public function __construct($options = array())
     {

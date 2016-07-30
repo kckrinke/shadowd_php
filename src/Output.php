@@ -22,6 +22,14 @@ namespace shadowd;
 
 class Output
 {
+    private $options;
+
+    /* Construct a new object. */
+    public function __construct($options = array())
+    {
+        $this->options = $options;
+    }
+
     /* Show a fatal error and stop. */
     public function error()
     {

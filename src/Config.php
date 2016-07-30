@@ -22,6 +22,8 @@ namespace shadowd;
 
 class Config
 {
+    private $file, $data, $section;
+
     /* Construct a new object and parse ini file. */
     public function __construct()
     {
