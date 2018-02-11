@@ -25,7 +25,9 @@ class Output
     /** @var array $options */
     private $options;
 
-    /* Construct a new object. */
+    /**
+     * Initialize options.
+     */
     public function __construct($options = array())
     {
         if (!isset($options['detailedError']) || is_null($options['detailedError'])) {

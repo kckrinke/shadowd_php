@@ -26,7 +26,7 @@ class Input
     private $options;
 
     /**
-     * Construct a new object.
+     * Initialize options.
      *
      * @param array $options
      */

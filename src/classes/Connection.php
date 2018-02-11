@@ -26,7 +26,7 @@ class Connection
     private $options;
 
     /**
-     * Construct a new object.
+     * Initialize options.
      *
      * @param array $options
      * @throws \Exception if options are wrong
