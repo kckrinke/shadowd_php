@@ -59,28 +59,28 @@ class ConnectorHelper
             if (!$config->get('observe') && ($status['attack'] === true)) {
                 if ($status['critical'] === true) {
                     if ($config->get('debug')) {
-                        $output->log(
+                        $output->writeLog(
                             'shadowd: stopped critical attack from client: '
                             . $input->getClientIp()
                         );
                     }
 
-                    $output->error();
+                    $output->showErrorAndExit();
                 }
 
                 if (!$input->defuseInput($status['threats'])) {
                     if ($config->get('debug')) {
-                        $output->log(
+                        $output->writeLog(
                             'shadowd: stopped attack from client: '
                             . $input->getClientIp()
                         );
                     }
 
-                    $output->error();
+                    $output->showErrorAndExit();
                 }
 
                 if ($config->get('debug')) {
-                    $output->log(
+                    $output->writeLog(
                         'shadowd: removed threat from client: '
                         . $input->getClientIp()
                     );
@@ -94,18 +94,18 @@ class ConnectorHelper
 
             // Stop if there is no config object.
             if (!$config) {
-                $output->log('shadowd: ' . rtrim($e->getMessage()));
-                $output->error();
+                $output->writeLog('shadowd: ' . rtrim($e->getMessage()));
+                $output->showErrorAndExit();
             }
 
             // Let PHP handle the log writing if debug is enabled.
             if ($config->get('debug')) {
-                $output->log('shadowd: ' . rtrim($e->getMessage()));
+                $output->writeLog('shadowd: ' . rtrim($e->getMessage()));
             }
 
             // If protection mode is enabled we can't let this request pass.
             if (!$config->get('observe')) {
-                $output->error();
+                $output->showErrorAndExit();
             }
         }
     }

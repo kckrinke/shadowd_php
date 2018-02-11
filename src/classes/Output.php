@@ -45,7 +45,7 @@ class Output
      * @param int|null $type
      * @return void
      */
-    public function error($type = null)
+    public function showErrorAndExit($type = null)
     {
         header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
 
@@ -66,7 +66,7 @@ class Output
      * @param string $message
      * @return void
      */
-    public function log($message)
+    public function writeLog($message)
     {
         error_log($message);
     }
