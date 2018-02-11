@@ -24,11 +24,11 @@ spl_autoload_register(
 
         if ($classes === null) {
             $classes = array(
-                'shadowd\\connectorhelper' => '/ConnectorHelper.php',
-                'shadowd\\connection'      => '/Connection.php',
-                'shadowd\\config'          => '/Config.php',
-                'shadowd\\input'           => '/Input.php',
-                'shadowd\\output'          => '/Output.php',
+                'shadowd\\connectorhelper' => '/classes/ConnectorHelper.php',
+                'shadowd\\connection'      => '/classes/Connection.php',
+                'shadowd\\config'          => '/classes/Config.php',
+                'shadowd\\input'           => '/classes/Input.php',
+                'shadowd\\output'          => '/classes/Output.php',
                 'services_json'            => '/libs/json.php'
             );
         }

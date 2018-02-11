@@ -22,4 +22,4 @@ define('SHADOWD_CONNECTOR_VERSION', '2.0.2-php');
 
 require_once(realpath(dirname(__FILE__)) . '/autoload.php');
 
-ConnectorHelper::start();
+\shadowd\ConnectorHelper::start();
