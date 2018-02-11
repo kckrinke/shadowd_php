@@ -53,7 +53,7 @@ class Config
             if ($required) {
                 throw new \Exception($key . ' in config missing');
             } else {
-                return false;
+                return null;
             }
         } else {
             return $this->data[$this->section][$key];

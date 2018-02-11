@@ -35,11 +35,11 @@ class Input
             $options['callerKey'] = 'SCRIPT_FILENAME';
         }
 
-        if (!isset($options['ignoreFile'])) {
+        if (!isset($options['ignoreFile']) || is_null($options['ignoreFile'])) {
             $options['ignoreFile'] = false;
         }
 
-        if (!isset($options['rawData'])) {
+        if (!isset($options['rawData']) || is_null($options['rawData'])) {
             $options['rawData'] = false;
         }
 
@@ -140,7 +140,7 @@ class Input
             }
         } elseif (($newPath !== false) && (is_string($input) || is_numeric($input))) {
             // FIXME: the encoding does not work properly all the time yet.
-            if (!mb_check_encoding($input, 'UTF-8')) {
+            if (function_exists('mb_check_encoding') && !mb_check_encoding($input, 'UTF-8')) {
                 $input = mb_convert_encoding($input, 'UTF-8');
             }
 

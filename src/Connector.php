@@ -28,8 +28,10 @@ class Connector
     public static function start()
     {
         try {
-            $output = new Output();
             $config = new Config();
+            $output = new Output(array(
+                'detailedError' => $config->get('detailed_error')
+            ));
             $input  = new Input(array(
                 'clientIpKey' => $config->get('client_ip'),
                 'callerKey'   => $config->get('caller'),
@@ -80,6 +82,11 @@ class Connector
                 }
             }
         } catch (\Exception $e) {
+            /* Fallback in case the config object threw an exception. */
+            if (!$output) {
+                $output = new Output();
+            }
+
             /* Stop if there is no config object. */
             if (!$config) {
                 $output->log('shadowd: ' . rtrim($e->getMessage()));

@@ -27,14 +27,26 @@ class Output
     /* Construct a new object. */
     public function __construct($options = array())
     {
+        if (!isset($options['detailedError']) || is_null($options['detailedError'])) {
+            $options['detailedError'] = true;
+        }
+
         $this->options = $options;
     }
 
-    /* Show a fatal error and stop. */
-    public function error()
+    /* Send an error message and stop. */
+    public function error($type = null)
     {
-        header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
-        exit('<h1>500 Internal Server Error</h1>');
+        if (!$this->options['detailedError']) {
+            /* Show a generic error message. */
+            header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+            echo '<h1>500 Internal Server Error</h1>';
+        } else {
+            /* Show the fancy error template. */
+            require(realpath(dirname(__FILE__)) . '/templates/error.html.php');
+        }
+
+        exit(1);
     }
 
     /* Write message to error log. */
