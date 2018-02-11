@@ -44,11 +44,12 @@ class Output
     public function error($type = null)
     {
         if (!$this->options['detailedError']) {
-            /* Show a generic error message. */
+            // Show a generic error message.
             header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
             echo '<h1>500 Internal Server Error</h1>';
         } else {
-            /* Show the fancy error template. */
+            // Show the fancy error template.
+            header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
             require(realpath(dirname(__FILE__)) . '/../templates/error.html.php');
         }
 
