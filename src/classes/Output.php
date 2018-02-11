@@ -49,7 +49,7 @@ class Output
             echo '<h1>500 Internal Server Error</h1>';
         } else {
             /* Show the fancy error template. */
-            require(realpath(dirname(__FILE__)) . '/templates/error.html.php');
+            require(realpath(dirname(__FILE__)) . '/../templates/error.html.php');
         }
 
         exit(1);

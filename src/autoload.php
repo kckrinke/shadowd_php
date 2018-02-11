@@ -29,6 +29,7 @@ spl_autoload_register(
                 'shadowd\\config'          => '/classes/Config.php',
                 'shadowd\\input'           => '/classes/Input.php',
                 'shadowd\\output'          => '/classes/Output.php',
+                'shadowd\\template'        => '/classes/Template.php',
                 'services_json'            => '/libs/json.php'
             );
         }

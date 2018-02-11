@@ -1,13 +1,7 @@
 <?php
 
-function logo() {
-    $file = dirname(__FILE__) . '/logo.png';
-    return 'data:image/png;base64,' . file_get_contents(
-        'php://filter/read=convert.base64-encode/resource=' . $file
-    );
-}
-
-echo '<img src="' . htmlspecialchars(logo()) . '" />';
+$file = dirname(__FILE__) . '/logo.png';
+echo '<img src="' . htmlspecialchars(\shadowd\Template::getInlineFile($file, 'image/png')) . '" />';
 
 ?>
 
