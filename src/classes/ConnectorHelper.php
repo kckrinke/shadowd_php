@@ -65,7 +65,7 @@ class ConnectorHelper
                         );
                     }
 
-                    $output->showErrorAndExit();
+                    $output->showErrorAndExit(Output::ATTACK);
                 }
 
                 if (!$input->defuseInput($status['threats'])) {
@@ -76,7 +76,7 @@ class ConnectorHelper
                         );
                     }
 
-                    $output->showErrorAndExit();
+                    $output->showErrorAndExit(Output::ATTACK);
                 }
 
                 if ($config->get('debug')) {
@@ -95,7 +95,7 @@ class ConnectorHelper
             // Stop if there is no config object.
             if (!$config) {
                 $output->writeLog('shadowd: ' . rtrim($e->getMessage()));
-                $output->showErrorAndExit();
+                $output->showErrorAndExit(Output::ERROR);
             }
 
             // Let PHP handle the log writing if debug is enabled.
@@ -105,7 +105,7 @@ class ConnectorHelper
 
             // If protection mode is enabled we can't let this request pass.
             if (!$config->get('observe')) {
-                $output->showErrorAndExit();
+                $output->showErrorAndExit(Output::ERROR);
             }
         }
     }

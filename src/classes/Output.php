@@ -22,6 +22,10 @@ namespace shadowd;
 
 class Output
 {
+    const ATTACK = 1;
+
+    const ERROR = 2;
+
     /** @var array $options */
     private $options;
 
@@ -42,10 +46,10 @@ class Output
     /**
      * Show a fatal error and stop.
      *
-     * @param int|null $type
+     * @param int $type
      * @return void
      */
-    public function showErrorAndExit($type = null)
+    public function showErrorAndExit($type = self::ERROR)
     {
         header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
 
@@ -54,7 +58,7 @@ class Output
             echo '<h1>500 Internal Server Error</h1>';
         } else {
             // Show the fancy error template.
-            Template::renderTemplate('error');
+            Template::renderTemplate('block');
         }
 
         exit(1);
