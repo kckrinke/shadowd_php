@@ -34,4 +34,30 @@ class Template
         $content = file_get_contents('php://filter/read=convert.base64-encode/resource=' . $file);
         return 'data:' . $mimeType . ';base64,' . $content;
     }
+
+    /**
+     * Render PHP template file.
+     *
+     * @param string $template
+     * @throws \Exception if template invalid
+     */
+    public static function renderTemplate($template)
+    {
+        if (!preg_match('/^\w+$/', $template)) {
+            throw new \Exception('invalid template name');
+        }
+
+        $templateDirectory = realpath(dirname(__FILE__) . '/../templates') . '/';
+        $templatePath = realpath($templateDirectory . $template . '.html.php');
+
+        if (!$templatePath || !is_file($templatePath)) {
+            throw new \Exception('template not found');
+        }
+
+        if (strpos($templatePath, $templateDirectory) !== 0) {
+            throw new \Exception('invalid template path');
+        }
+
+        require($templatePath);
+    }
 }
