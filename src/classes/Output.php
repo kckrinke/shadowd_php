@@ -27,6 +27,8 @@ class Output
 
     /**
      * Initialize options.
+     *
+     * @param array $options
      */
     public function __construct($options = array())
     {
