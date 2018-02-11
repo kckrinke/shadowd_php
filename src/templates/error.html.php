@@ -37,8 +37,7 @@
             line-height: 20px;
             margin-bottom: 20px;
             padding: 50px;
-            max-width: 800px;
-            min-width 600px;
+            width: 800px;
         }
 
         a {
