@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2018 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -22,9 +22,18 @@ namespace shadowd;
 
 class Config
 {
-    private $file, $data, $section;
+    /** @var string */
+    private $file;
 
-    /* Construct a new object and parse ini file. */
+    /** @var string */
+    private $section;
+
+    /** @var array */
+    private $data;
+
+    /**
+     * Construct a new object and parse ini file.
+     */
     public function __construct()
     {
         if (getenv('SHADOWD_CONNECTOR_CONFIG')) {
@@ -46,7 +55,14 @@ class Config
         }
     }
 
-    /* Get the value or stop if a required value is missing. */
+    /**
+     * Get the value or stop if a required value is missing.
+     *
+     * @param string $key
+     * @param bool $required
+     * @return string|null
+     * @throws \Exception if value required but missing
+     */
     public function get($key, $required = false)
     {
         if (!isset($this->data[$this->section][$key])) {

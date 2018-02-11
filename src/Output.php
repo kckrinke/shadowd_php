@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2018 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -22,6 +22,7 @@ namespace shadowd;
 
 class Output
 {
+    /** @var array $options */
     private $options;
 
     /* Construct a new object. */
@@ -34,7 +35,12 @@ class Output
         $this->options = $options;
     }
 
-    /* Send an error message and stop. */
+    /**
+     * Show a fatal error and stop.
+     *
+     * @param int|null $type
+     * @return void
+     */
     public function error($type = null)
     {
         if (!$this->options['detailedError']) {
@@ -49,7 +55,12 @@ class Output
         exit(1);
     }
 
-    /* Write message to error log. */
+    /**
+     * Write message to error log.
+     *
+     * @param string $message
+     * @return void
+     */
     public function log($message)
     {
         error_log($message);

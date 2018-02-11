@@ -3,7 +3,7 @@
 /**
  * Shadow Daemon -- Web Application Firewall
  *
- *   Copyright (C) 2014-2016 Hendrik Buchwald <hb@zecure.org>
+ *   Copyright (C) 2014-2018 Hendrik Buchwald <hb@zecure.org>
  *
  * This file is part of Shadow Daemon. Shadow Daemon is free software: you can
  * redistribute it and/or modify it under the terms of the GNU General Public
@@ -20,30 +20,17 @@
 
 namespace shadowd;
 
-/* JSON replacement for old PHP versions. */
-if (!function_exists('json_decode')) {
-    require_once(realpath(dirname(__FILE__)) . '/libs/json.php');
-
-    function json_decode($var) {
-        $JSON = new \Services_JSON;
-        return $JSON->decode($var);
-    }
-}
-
-if (!function_exists('json_encode')) {
-    require_once(realpath(dirname(__FILE__)) . '/libs/json.php');
-
-    function json_encode($var) {
-        $JSON = new \Services_JSON;
-        return $JSON->encode($var);
-    }
-}
-
 class Connection
 {
+    /** @var array */
     private $options;
 
-    /* Construct a new object. */
+    /**
+     * Construct a new object.
+     *
+     * @param array $options
+     * @throws \Exception if options are wrong
+     */
     public function __construct($options = array())
     {
         if (!preg_match('/^[0-9]*$/', $options['profile'])) {
@@ -65,12 +52,18 @@ class Connection
         $this->options = $options;
     }
 
-    /* Send user input to background server. */
+    /**
+     * Send user input to background server.
+     *
+     * @param Input $input
+     * @return array
+     * @throws \Exception if connection can not be established or data invalid
+     */
     public function send(Input $input)
     {
-        /* Prepare data. */
+        // Prepare data.
         $data = array(
-            'version'   => '2.0.2-php',
+            'version'   => SHADOWD_CONNECTOR_VERSION,
             'client_ip' => $input->getClientIp(),
             'caller'    => $input->getCaller(),
             'resource'  => $input->getResource(),
@@ -81,7 +74,7 @@ class Connection
         $json = json_encode($data);
         $hmac_json = $this->sign($this->options['key'], $json);
 
-        /* Establish connection. */
+        // Establish connection.
         $context = stream_context_create();
 
         if ($this->options['ssl']) {
@@ -90,7 +83,8 @@ class Connection
             $result = stream_context_set_option($context, 'ssl', 'verify_peer', true);
         }
 
-        $resource = ($this->options['ssl'] ? 'ssl' : 'tcp') . '://' . $this->options['host'] . ':' . $this->options['port'];
+        $resource = ($this->options['ssl'] ?
+                'ssl' : 'tcp') . '://' . $this->options['host'] . ':' . $this->options['port'];
         $fp = @stream_socket_client($resource, $errno, $errstr, 5, STREAM_CLIENT_CONNECT, $context);
 
         if (!$fp) {
@@ -101,10 +95,10 @@ class Connection
             }
         }
 
-        /* Send data. */
+        // Send data.
         fwrite($fp, $this->options['profile'] . "\n" . $hmac_json . "\n" . $json . "\n");
 
-        /* Get output. */
+        // Get output.
         $output = '';
 
         while (!feof($fp)) {
@@ -113,11 +107,17 @@ class Connection
 
         fclose($fp);
 
-        return $this->parse_output($output);
+        return $this->parseOutput($output);
     }
 
-    /* Parse output from the background server. */
-    private function parse_output($output)
+    /**
+     * Parse output from the background server.
+     *
+     * @param string $output
+     * @return array
+     * @throws \Exception if something is wrong with the output
+     */
+    private function parseOutput($output)
     {
         $json = json_decode($output, true);
 

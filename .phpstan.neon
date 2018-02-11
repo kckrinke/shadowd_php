@@ -1,0 +1,9 @@
+parameters:
+	autoload_files:
+		- %rootDir%/../../../src/autoload.php
+
+	excludes_analyse:
+		- %rootDir%/../../../src/autoload.php
+		- %rootDir%/../../../src/Connector.php
+		- %rootDir%/../../../src/templates/error.html.php
+		- %rootDir%/../../../src/libs/json.php
